@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>First Vue Program</title>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/vue.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<script>
+		window.onload = function () {
+			var vm = new Vue({
+				el: "#eddyDiv",
+				data: {
+					users: [
+						{ name: 'eddy', age: '23', email: 'yuedilia@usc.edu' },
+						{ name: 'mindy', age: '21', email: 'whatever@osu.edu' },
+					],
+					user:{},
+				},
+				methods: {
+					addUser(name, age, email) {
+						this.users.push(this.user);
+						this.clearCurrentUser();
+					},
+					deleteUser(index) {
+						this.users.splice(index, 1);
+					},
+					clearCurrentUser() {
+						this.user = {};
+					},
+				}
+			});
+		}
+	</script>
+</head>
+
+<body>
+	<div class="container" id="eddyDiv">
+		<h1 class="display-6 mb-4">Add Users</h1>
+		<form class="mb-4">
+			<div class="form-group text-center mb-3 row">
+				<label for="name" class="col-2 col-form-label">Name</label>
+				<div class="col-6">
+					<input type="text" class="form-control" id="name" v-model="user.name">
+				</div>
+			</div>
+			<div class="form-group text-center mb-3 row">
+				<label for="age" class="col-2 col-form-label">Age</label>
+				<div class="col-6">
+					<input type="text" class="form-control" id="age" v-model="user.age">
+				</div>
+			</div>
+			<div class="form-group text-center mb-3 row">
+				<label for="email" class="col-2 col-form-label">Email</label>
+				<div class="col-6">
+					<input type="email" class="form-control" id="email" v-model="user.email">
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<input type="button" value="Add" class="btn btn-primary" v-on:click="addUser()">
+				<input type="reset" value="Reset" class="btn btn-secondary" v-on:click="clearCurrentUser()">
+			</div>
+		</form>
+		<h1 class="display-6 mb-4 eddy">List of Users</h1>
+		<table class="table table-bordered table-hover text-center">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Email</th>
+					<th>Option</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(user, index) in users">
+					<td>{{index}}</td>
+					<td>{{user.name}}</td>
+					<td>{{user.age}}</td>
+					<td>{{user.email}}</td>
+					<td><button v-on:click="deleteUser(index)">delete</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
